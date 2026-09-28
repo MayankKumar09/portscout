@@ -1,8 +1,19 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
 [project]
 name = "portscout"
 version = "0.1.0"
 description = "A Python port scanner built for learning network security"
 requires-python = ">=3.11"
+dependencies = ["scapy"]
+
+[project.scripts]
+portscout = "portscout.cli:main"
+
+[tool.setuptools]
+packages = ["portscout"]
 
 [tool.pytest.ini_options]
 pythonpath = ["."]
