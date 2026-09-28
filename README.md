@@ -7,7 +7,7 @@ A Python port scanner with TCP connect and SYN scanning, built to learn network 
 
 ## Installation
 ```bash
-git clone https://github.com/<your-username>/portscout.git
+git clone https://github.com/MayankKumar09/portscout.git
 cd portscout
 python -m venv venv
 pip install -e .
