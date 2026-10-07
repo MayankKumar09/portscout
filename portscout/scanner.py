@@ -1,4 +1,6 @@
 import socket
+from concurrent.futures import ThreadPoolExecutor
+
 
 def scan_port(host: str, port: int, timeout: float = 1.0) -> bool:
     """Return True if a TCP connection to host:port succeeds."""
@@ -26,3 +28,10 @@ def parse_ports(spec: str) -> list[int]:
     if not ports or min(ports) < 1 or max(ports) > 65535:
         raise ValueError("ports must be between 1 and 65535")
     return sorted(ports)
+
+
+def scan_ports(host: str, ports: list[int], timeout: float = 1.0, workers: int = 100) -> list[int]:
+    """Scan ports concurrently and return the open ones in ascending order."""
+    with ThreadPoolExecutor(max_workers=workers) as pool:
+        results = pool.map(lambda port: scan_port(host, port, timeout), ports)
+        return [port for port, is_open in zip(ports, results) if is_open]
